@@ -15,6 +15,7 @@ make
 ```
 # How to use
 execute ./spst in project directory.
+
 The usage is:
 
 ![ss](./ss/usage.png)
