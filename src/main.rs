@@ -38,7 +38,7 @@ fn main() {
         list.shuffle(&mut rng);
         //let argument = format!("{:?}", list).replace(", ", " ").replace("\"", "");
         //println!("argument: {:?}", argument);
-        let p_s = Command::new("../../push_swap/push_swap")
+        let p_s = Command::new("./push_swap")
                                 .args(list.iter())
                                 .output()
                                 .expect("failed to execute process");
@@ -46,7 +46,7 @@ fn main() {
         let answer = p_s.stdout;
         steps[n - 1] = answer.split(|&c| c == '\n' as u8).count() - 1;
 
-        let mut checker = Command::new("../../push_swap/checker")
+        let mut checker = Command::new("./checker")
                                 .args(list.iter())
                                 .stdin(Stdio::piped())
                                 .stdout(Stdio::piped())
