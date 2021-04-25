@@ -16,9 +16,9 @@ cd simple_push_swap_tester
 make
 ```
 # How to use
-execute ./spst in project directory.
+Execute ./spst in project directory.
 
-if you use -d option, output your push_swap's standard error.
+If you use -d option, output your push_swap's standard error.
 
 The usage is:
 
