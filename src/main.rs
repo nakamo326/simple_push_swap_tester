@@ -15,6 +15,9 @@ use termion::color;
     about = "simple push_swap checker\ncheck sorting five times and output average step."
 )]
 struct Cli {
+    /// output push_swap's stderr
+    #[clap(short = 'd', long = "debug")]
+    debug: bool,
     /// argument size to sort. default is 100.
     #[clap(name = "SIZE")]
     size: Option<usize>,
@@ -46,6 +49,11 @@ fn main() {
         let answer = p_s.stdout;
         steps[n - 1] = answer.split(|&c| c == '\n' as u8).count() - 1;
 
+        if args.debug == true {
+            let debug_print = str::from_utf8(&p_s.stderr).unwrap();
+            println!("{}", debug_print);
+        }
+
         let mut checker = Command::new("./checker")
                                 .args(list.iter())
                                 .stdin(Stdio::piped())
@@ -73,7 +81,6 @@ fn main() {
         } else if eresult == "Error\n" {
             println!("{}Error{}", color::Fg(color::Red), color::Fg(color::Reset));
         }
-        stdout().flush().unwrap();
     }
     let mut sum:usize = steps.iter().sum();
     sum /= 5;
