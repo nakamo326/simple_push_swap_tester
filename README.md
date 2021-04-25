@@ -18,6 +18,8 @@ make
 # How to use
 execute ./spst in project directory.
 
+if you use -d option, output your push_swap's standard error.
+
 The usage is:
 
 ![ss](./ss/usage.png)
