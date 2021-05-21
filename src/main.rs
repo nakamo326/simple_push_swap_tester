@@ -21,14 +21,22 @@ struct Cli {
     /// argument size to sort. default is 100.
     #[clap(name = "SIZE")]
     size: Option<usize>,
+    /// times of test. default is 5.
+    #[clap(name = "TIMES")]
+    times: Option<usize>,
 }
 
 fn main() {
     let args = Cli::parse();
     let mut rng = thread_rng();
     let mut list: Vec<String> = Vec::new();
-    let mut steps:[usize; 5] = [0; 5];
+    let mut times: usize = 5;
     let mut size: usize = 100;
+
+    if let Some(input) = args.times {
+        times = input;
+    }
+    let mut steps = Vec::with_capacity(times);
 
     if let Some(input) = args.size {
         size = input;
@@ -37,7 +45,7 @@ fn main() {
         list.push(n.to_string());
     }
 
-    for n in 1..6 {
+    for n in 1..(times + 1) {
         list.shuffle(&mut rng);
         //let argument = format!("{:?}", list).replace(", ", " ").replace("\"", "");
         //println!("argument: {:?}", argument);
@@ -47,7 +55,7 @@ fn main() {
                                 .expect("failed to execute process");
 
         let answer = p_s.stdout;
-        steps[n - 1] = answer.split(|&c| c == '\n' as u8).count() - 1;
+        steps.push(answer.split(|&c| c == '\n' as u8).count() - 1);
 
         if args.debug == true {
             let debug_print = str::from_utf8(&p_s.stderr).unwrap();
@@ -71,7 +79,7 @@ fn main() {
         let result = str::from_utf8(&output.stdout).unwrap();
         let eresult = str::from_utf8(&output.stderr).unwrap();
 
-        print!("Test{} step count is {}{}{}, checker output ... "
+        print!("Test{:02} step count is {}{}{}, checker output ... "
             , n, color::Fg(color::Blue), steps[n - 1], color::Fg(color::Reset));
         stdout().flush().unwrap();
         if result == "OK\n" {
@@ -83,7 +91,7 @@ fn main() {
         }
     }
     let mut sum:usize = steps.iter().sum();
-    sum /= 5;
+    sum /= times;
     println!("step average is {}{}{}"
             , color::Fg(color::Blue), sum, color::Fg(color::Reset));
 }
