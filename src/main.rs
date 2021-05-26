@@ -90,8 +90,13 @@ fn main() {
             println!("{}Error{}", color::Fg(color::Red), color::Fg(color::Reset));
         }
     }
-    let mut sum:usize = steps.iter().sum();
+    println!("Test Result (size ... {}, times ... {})", size, times);
+    if let Some(max) = steps.iter().max() {
+        println!("max score is {}{}{}"
+            , color::Fg(color::Red), max, color::Fg(color::Reset))
+    }
+    let mut sum: usize = steps.iter().sum();
     sum /= times;
-    println!("step average is {}{}{}"
+    println!("score average is {}{}{}"
             , color::Fg(color::Blue), sum, color::Fg(color::Reset));
 }
