@@ -4,6 +4,8 @@
 simple push_swap tester for 42 school projects.
 
 # Installation
+Install Rust to use cargo command.
+
 Clone repository to the same level as your project directory.
 
 Or change PROJECTDIR in Makefile.
